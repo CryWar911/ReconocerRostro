@@ -1,3 +1,0 @@
-modelo,genuina_min,genuina_p1,genuina_mediana,imp_externa_max,imp_interna_max,imp_externa_p99.9,imp_interna_p99.9,margen_externas,margen_ext+int,EER_externas_%,EER_internas_%,EER_ext+int_%,AUC_ext+int,n_gen,n_ext,n_int
-FaceNet VGGFace2,0.607033,0.638709,0.8671547,0.51099455,0.5830424,0.42197418,0.5499728,0.09603846,0.023990631,0.0,0.0,0.0,1.0,305,6456,7015
-Control (a2) ResNet-18 ImageNet,0.6223872,0.68207556,0.92741585,0.91217184,0.8552623,0.88298744,0.7788496,-0.28978467,-0.28978467,3.5535884778678364,1.6250890947968648,2.8932704254798693,0.9961890204945415,305,6456,7015

@@ -1,8 +1,0 @@
-metrica,valor,condicion,cumple
-FAR,0.00040747028862478775,<= 0.05,True
-FRR,0.010033444816053512,<= 0.1,True
-exactitud_balanceada,0.9947795424476609,>= 0.9,True
-tiempo_verificacion_s,0.07300614000141649,<= 3.0,True
-exactitud_simple (solo informativa),0.9994009584664537,—,
-proporción genuinas,0.019901490947816826,—,
-EER (descriptivo),0.006706111486505668,sin objetivo,
