@@ -1,0 +1,27 @@
+# Python 3.10.4 (Windows 10), GPU NVIDIA RTX 5060 (Blackwell, sm_120), driver 616.92
+#
+# 1) PyTorch con CUDA 12.8 (obligatorio para la RTX 5060; las ruedas de PyPI no traen sm_120):
+#      pip install torch==2.11.0 torchvision==0.26.0 --index-url https://download.pytorch.org/whl/cu128
+#    En Colab o sin GPU NVIDIA basta: pip install torch torchvision
+# 2) Resto:
+#      pip install -r requirements.txt
+# 3) facenet-pytorch SIN dependencias (fija torch<2.3, que no soporta esta GPU):
+#      pip install facenet-pytorch==2.6.0 --no-deps
+#    pip check mostrara avisos de facenet-pytorch sobre numpy/pillow/torch: son esperados.
+numpy==2.2.6
+scipy==1.15.3
+pandas==2.3.3
+scikit-learn==1.7.2
+matplotlib==3.10.9
+pillow==12.3.0
+opencv-contrib-python==5.0.0.93
+tqdm==4.70.1
+requests==2.34.2
+jupyter==1.1.1
+notebook==7.6.3
+ipykernel==7.3.0
+nbconvert==7.17.2
+nbformat==5.11.1
+# Sprint 3 (aplicacion web local, app/) y pruebas automaticas
+Flask==3.1.3
+pytest==9.2.0
