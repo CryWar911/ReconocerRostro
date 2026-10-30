@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block titulo %}Acerca de / limitaciones{% endblock %}
+{% block contenido %}
+<section class="tarjeta">
+  <h1>Acerca de este prototipo</h1>
+  <p>Prototipo académico de inicio de sesión por <strong>verificación facial 1 a 1</strong>: comprueba si la persona
+    frente a la cámara es el usuario que dice ser. No busca a la persona entre todos los usuarios.</p>
+
+  <h2>Cómo decide</h2>
+  <ul>
+    <li>La cámara toma {{ cfg.N_FOTOGRAMAS }} fotogramas en unos 2 segundos.</li>
+    <li>En cada uno se detecta el rostro (MTCNN), se recorta a 160 × 160 y se calcula su vector de características con FaceNet
+      (red preentrenada con VGGFace2, sin modificar).</li>
+    <li>El vector se compara con la plantilla del usuario elegido. Un fotograma "vota sí" si la similitud llega al umbral fijado en la
+      evaluación del modelo.</li>
+    <li><strong>Acceso permitido</strong> si al menos {{ cfg.MIN_VOTOS }} de {{ cfg.N_FOTOGRAMAS }} fotogramas votan sí.
+      <strong>No se pudo verificar de forma confiable</strong> si hay menos de {{ cfg.MIN_VALIDOS }} fotogramas con un único rostro
+      nítido, cercano y bien iluminado. En otro caso, <strong>acceso denegado</strong>.</li>
+    <li>Tras {{ cfg.BLOQUEO_FALLOS }} intentos denegados seguidos, el usuario queda bloqueado {{ cfg.BLOQUEO_SEG }} s.</li>
+  </ul>
+
+  <h2>Formas de ingresar</h2>
+  <ul>
+    <li><strong>Nombre + rostro</strong> (verificación 1 a 1): usted elige quién es y se compara su rostro solo con esa plantilla.
+      Es la forma evaluada en el Sprint 2.</li>
+    <li><strong>Solo cámara</strong> (identificación 1:N): se compara su rostro con <em>todos</em> los usuarios registrados en la
+      aplicación (no con las identidades del conjunto de datos). Un fotograma cuenta solo si su mejor candidato llega al umbral y supera al
+      segundo candidato por al menos {{ "%.2f"|format(cfg.MARGEN_1N) }}. Se acepta si el mismo usuario gana en al menos {{ cfg.MIN_VOTOS }} de
+      {{ cfg.N_FOTOGRAMAS }} fotogramas. Si hay dudas, el resultado es "No se pudo identificar de forma confiable".</li>
+    <li><strong>Palabra clave</strong> (opcional por usuario): si su cuenta la tiene, se pide después del rostro. Solo se guarda un
+      resumen cifrado (hash scrypt con sal), nunca la clave. Si se deniega, no se indica si falló el rostro o la clave.</li>
+    {% if not modo_publico %}
+    <li><strong>Modo explicación</strong> (solo en este equipo): el interruptor «Mostrar cómo decide la máquina» enseña las cajas del
+      detector, las capas de la red, el vector de 512 números, las puntuaciones frente al umbral y la votación. Es para la exposición:
+      la versión pública nunca muestra puntuaciones. El mapa de activación es una aproximación, no una explicación causal.</li>
+    {% endif %}
+  </ul>
+
+  <h2>Limitaciones importantes</h2>
+  <ul>
+    <li><strong>No tiene detección de vida.</strong> No distingue a una persona real de una foto, una pantalla o un video del usuario.
+      <strong>No protege contra la suplantación</strong> y no debe usarse para proteger nada real.</li>
+    <li>Las cifras de la evaluación del modelo (Sprint 2) se midieron con <strong>fotos del conjunto de datos de Kaggle</strong>
+      (<em>Face Recognition Dataset</em>), no con una cámara web: fotos de prensa de personas famosas, bien iluminadas y casi siempre
+      de frente. En esa prueba aceptó por error 6 de 14 725 intentos impostores (0,041 %) y rechazó 3 de 299 intentos legítimos
+      (1,00 %). Es probable que el modelo ya hubiera visto a esas personas famosas, así que con personas desconocidas y una cámara
+      web puede funcionar peor.</li>
+    <li><strong>La prueba con el video de los voluntarios todavía está pendiente.</strong> Aún no hay cifras medidas con la cámara web
+      ni con los voluntarios.</li>
+    <li><strong>El modo "Solo cámara" (1:N) no fue evaluado en el Sprint 2</strong>: solo se evaluó la verificación 1 a 1. Al comparar con
+      todos los usuarios, <strong>el riesgo de aceptar a otra persona crece con el número de usuarios registrados</strong>. El margen
+      ({{ "%.2f"|format(cfg.MARGEN_1N) }}) es un valor inicial no calibrado.</li>
+    <li>Falla más con gafas de sol, mascarilla o media cara tapada, con poca luz y con imágenes borrosas.</li>
+    <li>Personas muy parecidas entre sí pueden confundirse.</li>
+    <li><strong>Cualquiera puede bloquear temporalmente a un usuario</strong> eligiendo su nombre y fallando {{ cfg.BLOQUEO_FALLOS }} veces.
+      El administrador puede desbloquearlo.</li>
+    <li>Funciona solo en este equipo (127.0.0.1) y para una demostración en clase.</li>
+  </ul>
+
+  <h2>Privacidad</h2>
+  <ul>
+    <li>Las imágenes de la cámara se procesan en memoria y se descartan; no se guardan.</li>
+    <li>De cada usuario registrado se guarda solo su plantilla (un vector numérico) y los datos de su autorización, en una carpeta
+      privada fuera del repositorio. Las fotos de registro se descartan salvo que el administrador pida conservarlas.</li>
+    <li>Los usuarios se identifican con seudónimos. El registro de intentos guarda fecha, usuario solicitado y resultado, sin imágenes.</li>
+    <li>El administrador puede eliminar a un usuario con todos sus datos.</li>
+  </ul>
+</section>
+{% endblock %}

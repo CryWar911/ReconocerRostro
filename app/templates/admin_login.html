@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block titulo %}Administración{% endblock %}
+{% block contenido %}
+<section class="tarjeta">
+  <h1>Administración</h1>
+  {% if not habilitado %}
+    <div class="resultado no_concluyente">
+      <h2>Administración deshabilitada</h2>
+      <p>Defina la variable de entorno <code>FACEID_ADMIN_PASSWORD</code> antes de arrancar la aplicación.
+         La contraseña nunca se guarda en el código ni en git.</p>
+    </div>
+  {% else %}
+    <form method="post" action="{{ url_for('admin.entrar') }}">
+      <label for="clave">Contraseña del administrador</label>
+      <input id="clave" name="clave" type="password" autocomplete="current-password" required autofocus>
+      <div class="botones"><button class="primario" type="submit">Entrar</button></div>
+    </form>
+    {% if error %}<div class="resultado error" role="alert"><p>{{ error }}</p></div>{% endif %}
+  {% endif %}
+</section>
+{% endblock %}

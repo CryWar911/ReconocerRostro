@@ -1,0 +1,6 @@
+role,split,imagenes,personas
+impostora_test,test,327,4
+impostora_val,val,269,3
+registrada,test,299,24
+registrada,train,1362,24
+registrada,val,305,24

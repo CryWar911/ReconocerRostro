@@ -1,0 +1,10 @@
+{
+  "nota": "Huella del modelo evaluado en el Sprint 2. La app no debe cambiarlo; test_modelo_integridad.py falla si algo difiere.",
+  "paquete": "models/verificador_facenet_vggface2",
+  "red_ts_sha256": "5a2b8aa4d8dd506a89c647cf2db00d080d6f41edefe67e7f02944eb21639a43d",
+  "plantillas_npz_sha256": "28d138f0cc691d9d2fff0c30df101f571cce195758842c7d5ec136bb0f595808",
+  "pesos_originales_sha256": "281cebca8662831adb987a874bdcb36e73f5b1c6dc5ee5878f305e985625d99b",
+  "umbral": 0.551421,
+  "umbral_estado": "propuesto en validación",
+  "n_identidades_dataset": 24
+}

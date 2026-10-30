@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block titulo %}Registrar usuario{% endblock %}
+{% block contenido %}
+<section class="tarjeta">
+  <h1>Registrar usuario</h1>
+  <p class="suave">Se calcula la plantilla con {{ cfg.REGISTRO_MIN_FOTOS }} a {{ cfg.REGISTRO_MAX_FOTOS }} fotos (al menos
+    {{ cfg.REGISTRO_MIN_VALIDAS }} con un rostro válido). Solo se guarda la plantilla y los metadatos; las fotos se
+    descartan salvo que marque la casilla de conservarlas.</p>
+
+  <label for="uid">Seudónimo (no use el nombre real; por ejemplo V01)</label>
+  <input id="uid" type="text" maxlength="32" pattern="[A-Za-z0-9_\-]+" placeholder="V01">
+
+  <label class="casilla"><input id="autorizacion" type="checkbox"> El voluntario firmó la <strong>autorización escrita</strong> para el uso de sus imágenes (obligatorio)</label>
+  <label for="fecha">Fecha de la autorización firmada</label>
+  <input id="fecha" type="date" max="{{ hoy }}">
+
+  <fieldset class="seguridad">
+    <legend>Seguridad del inicio de sesión</legend>
+    <label class="casilla"><input type="radio" name="seguridad" value="solo_rostro" checked> Solo rostro</label>
+    <label class="casilla"><input type="radio" name="seguridad" value="rostro_clave"> Rostro + palabra clave</label>
+    <div id="bloque-clave" hidden>
+      <label for="clave">Palabra clave (mínimo {{ cfg.CLAVE_MIN }} caracteres; solo se guarda su hash)</label>
+      <input id="clave" type="password" autocomplete="new-password" minlength="{{ cfg.CLAVE_MIN }}" maxlength="{{ cfg.CLAVE_MAX }}">
+      <label for="clave2">Repita la palabra clave</label>
+      <input id="clave2" type="password" autocomplete="new-password">
+    </div>
+  </fieldset>
+
+  <label for="nfotos">Número de fotos</label>
+  <select id="nfotos">{% for k in range(cfg.REGISTRO_MIN_FOTOS, cfg.REGISTRO_MAX_FOTOS + 1) %}<option {% if k == 15 %}selected{% endif %}>{{ k }}</option>{% endfor %}</select>
+  <label class="casilla"><input id="conservar" type="checkbox"> Conservar las fotos en la carpeta privada (no recomendado)</label>
+
+  <div class="camara">
+    <video id="video" autoplay playsinline muted></video>
+    <canvas id="lienzo" hidden></canvas>
+    <div id="sin-camara" class="aviso">La cámara está apagada.</div>
+  </div>
+  <div class="botones">
+    <button id="btn-camara" type="button">Encender cámara</button>
+    <button id="btn-registrar" type="button" class="primario" disabled>Capturar fotos y registrar</button>
+  </div>
+  <div id="progreso" class="progreso" aria-live="polite"></div>
+  <div id="resultado" class="resultado" role="status" aria-live="polite" hidden><h2 id="res-titulo"></h2><p id="res-motivo"></p></div>
+  <p><a href="{{ url_for('admin.panel') }}">Volver al panel</a></p>
+</section>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  let stream = null;
+  const seguridad = () => document.querySelector('input[name="seguridad"]:checked').value;
+  const claveOk = () => seguridad() === "solo_rostro" ||
+    ($("clave").value.length >= {{ cfg.CLAVE_MIN }} && $("clave").value === $("clave2").value);
+  const listo = () => { $("btn-registrar").disabled = !(stream && $("autorizacion").checked && $("fecha").value && $("uid").value.trim() && claveOk()); };
+  ["autorizacion", "fecha", "uid", "clave", "clave2"].forEach((id) => $(id).addEventListener("input", listo));
+  document.querySelectorAll('input[name="seguridad"]').forEach((r) => r.addEventListener("change", () => {
+    $("bloque-clave").hidden = seguridad() !== "rostro_clave"; listo(); }));
+  $("btn-camara").addEventListener("click", async () => {
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: false });
+      $("video").srcObject = stream; $("sin-camara").hidden = true;
+    } catch (e) { $("sin-camara").textContent = "No se pudo usar la cámara: " + e.message; }
+    listo();
+  });
+  const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
+  $("btn-registrar").addEventListener("click", async () => {
+    $("btn-registrar").disabled = true; $("resultado").hidden = true;
+    const n = parseInt($("nfotos").value, 10), fotos = [], v = $("video"), c = $("lienzo");
+    for (let i = 0; i < n; i++) {
+      $("progreso").textContent = `Foto ${i + 1} de ${n}: mueva ligeramente la cabeza y cambie un poco la expresión…`;
+      c.width = v.videoWidth || 640; c.height = v.videoHeight || 480;
+      c.getContext("2d").drawImage(v, 0, 0, c.width, c.height);
+      fotos.push(c.toDataURL("image/jpeg", 0.92));
+      await esperar(350);
+    }
+    $("progreso").textContent = "Calculando la plantilla…";
+    const resp = await fetch("{{ url_for('admin.api_registrar') }}", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: $("uid").value.trim(), autorizacion: $("autorizacion").checked, fecha_autorizacion: $("fecha").value,
+                             conservar_fotos: $("conservar").checked, fotos, seguridad: seguridad(),
+                             clave: seguridad() === "rostro_clave" ? $("clave").value : undefined }) });
+    fotos.length = 0; $("clave").value = ""; $("clave2").value = "";
+    const j = await resp.json();
+    $("progreso").textContent = ""; $("resultado").hidden = false;
+    $("resultado").className = "resultado " + (resp.ok ? "permitido" : "error");
+    $("res-titulo").textContent = resp.ok ? `Usuario ${j.id} registrado` : "No se pudo registrar";
+    $("res-motivo").textContent = resp.ok ? `Plantilla calculada con ${j.n_fotos_validas} de ${j.n_fotos} fotos. ` +
+      (j.fotos_conservadas ? "Las fotos se conservaron en la carpeta privada. " : "Las fotos se descartaron. ") +
+      (j.requiere_clave ? "Inicio de sesión con rostro + palabra clave." : "Inicio de sesión solo con rostro.") : j.error;
+    listo();
+  });
+})();
+</script>
+{% endblock %}

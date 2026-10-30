@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block ancho %}ancho{% endblock %}
+{% block contenido %}
+<section class="tarjeta">
+  {% if modo_pruebas %}
+  <div class="resultado no_concluyente" role="note">
+    <strong>MODO PRUEBAS.</strong> Se registran todos los intentos con su caso de prueba y sus tiempos, sin imágenes.
+    <label for="caso">Caso de prueba (ID de casos_de_prueba.csv, por ejemplo CF01)</label>
+    <input id="caso" type="text" maxlength="20" pattern="[A-Za-z0-9_\-]*" placeholder="CF01">
+  </div>
+  {% endif %}
+  <div class="inicio">
+    <div>
+      <h1>Iniciar sesión</h1>
+      <p class="subtitulo">Su rostro es la llave: la cámara toma {{ n }} fotogramas y la red neuronal decide.</p>
+
+      <div class="pestanas" role="tablist" aria-label="Forma de ingresar">
+        <button type="button" role="tab" id="tab-a" aria-selected="true" aria-controls="panel-a">Nombre + rostro</button>
+        <button type="button" role="tab" id="tab-b" aria-selected="false" aria-controls="panel-b" {% if not n_app %}disabled{% endif %}>Solo cámara</button>
+      </div>
+
+      <div id="panel-a" role="tabpanel" aria-labelledby="tab-a">
+        <ol class="pasos">
+          <li>Elija quién es.</li>
+          <li>Encienda la cámara y colóquese de frente, con buena luz.</li>
+          <li>Pulse <em>Verificar</em> y quédese quieto unos 2 segundos. Si su cuenta tiene palabra clave, se la pediremos después.</li>
+        </ol>
+        <label for="usuario">¿Quién es usted?</label>
+        <select id="usuario">
+          <option value="">— Seleccione un usuario —</option>
+          {% if demo %}
+          <optgroup label="Usuarios registrados (demostración)">
+            {% for u in demo %}<option value="{{ u }}">{{ u }}</option>{% endfor %}
+          </optgroup>
+          {% endif %}
+          <optgroup label="Identidades del conjunto de datos (solo para pruebas)">
+            {% for u in dataset %}<option value="{{ u }}">{{ u }}</option>{% endfor %}
+          </optgroup>
+        </select>
+      </div>
+
+      <div id="panel-b" role="tabpanel" aria-labelledby="tab-b" hidden>
+        <ol class="pasos">
+          <li>Encienda la cámara y colóquese de frente, con buena luz. No hace falta elegir su nombre.</li>
+          <li>Pulse <em>Identificarme</em> y quédese quieto unos 2 segundos. Si su cuenta tiene palabra clave, se la pediremos después.</li>
+        </ol>
+        <p class="suave">Este modo busca su rostro entre {{ "el único usuario registrado" if n_app == 1 else "los " ~ n_app ~ " usuarios registrados" }} en la aplicación. No fue evaluado como el modo
+          "Nombre + rostro" (ver <a href="{{ url_for('acerca') }}">Acerca de</a>).</p>
+      </div>
+      {% if not n_app %}
+      <p class="suave" id="aviso-b">El modo <strong>Solo cámara</strong> está deshabilitado: todavía no hay usuarios registrados en la aplicación.</p>
+      {% endif %}
+
+      {% if explicacion %}
+      <label class="interruptor" for="explicar">
+        <input id="explicar" type="checkbox">
+        <span>Mostrar cómo decide la máquina
+          <small>Modo exposición, solo en este equipo: muestra las capas de la red y las puntuaciones.</small></span>
+      </label>
+      {% endif %}
+    </div>
+
+    <div>
+      <div class="camara" id="marco-camara">
+        <video id="video" autoplay playsinline muted></video>
+        <div class="guia" aria-hidden="true"></div>
+        <div class="contador" id="contador" aria-hidden="true">{% for i in range(n) %}<i></i>{% endfor %}</div>
+        <canvas id="lienzo" hidden></canvas>
+        <div id="sin-camara" class="aviso">
+          <svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><path d="M3 7h3l2-2h8l2 2h3v12H3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span id="sin-camara-texto">La cámara está apagada.</span>
+        </div>
+      </div>
+
+      <div class="botones">
+        <button id="btn-camara" type="button">Encender cámara</button>
+        <button id="btn-verificar" type="button" disabled>Verificar</button>
+      </div>
+
+      <div id="paso-clave" class="paso-clave" hidden>
+        <label for="clave">Paso 2: escriba su palabra clave</label>
+        <input id="clave" type="password" autocomplete="current-password" maxlength="128">
+        <div class="botones"><button id="btn-clave" type="button" class="primario">Continuar</button>
+          <button id="btn-cancelar-clave" type="button">Cancelar</button></div>
+      </div>
+
+      <div id="progreso" class="progreso" aria-live="polite"></div>
+      <div id="resultado" class="resultado" role="status" aria-live="polite" hidden>
+        <h2 id="res-titulo"></h2>
+        <p id="res-motivo"></p>
+        <div id="res-fotogramas" class="fotogramas"></div>
+        <p id="res-tiempo" class="tiempo"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if explicacion %}
+<section class="tarjeta explicacion" id="explicacion" hidden aria-live="polite">
+  <header>
+    <div>
+      <h2>¿Cómo decidió la máquina?</h2>
+      <p class="suave" style="margin:.2rem 0 0">El camino completo de este intento, del fotograma a la decisión.</p>
+    </div>
+    <span class="insignia">Modo exposición · solo en este equipo</span>
+  </header>
+  <ol class="flujo" id="flujo"></ol>
+</section>
+{% endif %}
+<script>
+  const CONFIG = { n: {{ n }}, intervaloMs: 400, explicacion: {{ "true" if explicacion else "false" }} };
+</script>
+<script src="{{ url_for('static', filename='explicacion.js') }}"></script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+{% endblock %}

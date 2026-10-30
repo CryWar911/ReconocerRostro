@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block titulo %}Panel de administración{% endblock %}
+{% block contenido %}
+<section class="tarjeta">
+  <div class="cabecera">
+    <h1>Panel de administración</h1>
+    <form method="post" action="{{ url_for('admin.salir') }}"><button type="submit">Cerrar sesión</button></form>
+  </div>
+  <p class="suave">Datos privados en: <code>{{ carpeta }}</code> (fuera de git). Solo se guarda la plantilla y los metadatos de cada usuario.</p>
+  <div class="botones"><a class="boton primario" href="{{ url_for('admin.registrar_pagina') }}">Registrar usuario</a></div>
+
+  <h2>Usuarios de la demostración</h2>
+  {% if demo %}
+  <table>
+    <thead><tr><th>Seudónimo</th><th>Seguridad</th><th>Autorización</th><th>Registro</th><th>Fotos válidas</th><th>Fotos guardadas</th><th></th></tr></thead>
+    <tbody>
+    {% for m in demo %}
+      <tr>
+        <td>{{ m.id }}</td>
+        <td>{{ "Rostro + palabra clave" if m.requiere_clave else "Solo rostro" }}<br>
+          <button data-clave="{{ m.id }}">{{ "Cambiar clave" if m.requiere_clave else "Añadir clave" }}</button>
+          {% if m.requiere_clave %}<button data-quitar-clave="{{ m.id }}">Quitar clave</button>{% endif %}</td>
+        <td>Firmada ({{ m.fecha_autorizacion }})</td><td>{{ m.fecha_registro }}</td>
+        <td>{{ m.n_fotos_validas }} de {{ m.n_fotos }}</td><td>{{ "Sí" if m.fotos_conservadas else "No" }}</td>
+        <td><button class="peligro" data-eliminar="{{ m.id }}">Eliminar</button></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}<p class="suave">Todavía no hay usuarios registrados.</p>{% endif %}
+
+  <h2>Bloqueos y contadores</h2>
+  <p class="suave">Bloqueo tras {{ cfg.BLOQUEO_FALLOS }} denegados seguidos durante {{ cfg.BLOQUEO_SEG }} s; tope de
+    {{ cfg.TOPE_INTENTOS }} intentos en {{ cfg.TOPE_VENTANA_SEG }} s con pausa de {{ cfg.TOPE_PAUSA_SEG }} s.</p>
+  {% if estados %}
+  <table>
+    <thead><tr><th>Usuario</th><th>Denegados seguidos</th><th>Bloqueo restante</th><th>Pausa restante</th><th></th></tr></thead>
+    <tbody>
+    {% for u, e in estados.items() %}
+      <tr><td>{{ u }}</td><td>{{ e.fallos }}</td><td>{{ e.bloqueado_seg }} s</td><td>{{ e.pausa_seg }} s</td>
+        <td><button data-desbloquear="{{ u }}">Desbloquear</button></td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}<p class="suave">Ningún usuario bloqueado ni con intentos fallidos pendientes.</p>{% endif %}
+
+  <h2>Últimos intentos registrados</h2>
+  <p class="suave">Solo intentos denegados, no concluyentes o rechazados por bloqueo; sin imágenes ni puntuaciones.</p>
+  {% if registros %}
+  <table>
+    <thead><tr><th>Fecha y hora</th><th>Usuario solicitado</th><th>Resultado</th><th>Motivo</th></tr></thead>
+    <tbody>{% for r in registros %}<tr><td>{{ r.fecha_hora }}</td><td>{{ r.usuario_solicitado }}</td><td>{{ r.resultado }}</td><td>{{ r.motivo }}</td></tr>{% endfor %}</tbody>
+  </table>
+  {% else %}<p class="suave">Sin registros.</p>{% endif %}
+  <p id="mensaje" role="status"></p>
+</section>
+<script>
+async function accion(url, id, confirmar, extra) {
+  if (confirmar && !confirm(confirmar)) return;
+  const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, ...(extra || {}) }) });
+  const j = await r.json();
+  if (r.ok) location.reload(); else document.getElementById("mensaje").textContent = j.error || "Error";
+}
+document.querySelectorAll("[data-eliminar]").forEach((b) => b.addEventListener("click", () =>
+  accion("{{ url_for('admin.api_eliminar') }}", b.dataset.eliminar,
+         `¿Eliminar a ${b.dataset.eliminar} con su plantilla, metadatos, fotos e intentos registrados? No se puede deshacer.`)));
+document.querySelectorAll("[data-clave]").forEach((b) => b.addEventListener("click", () => {
+  const c = prompt(`Nueva palabra clave para ${b.dataset.clave} (mínimo {{ cfg.CLAVE_MIN }} caracteres):`);
+  if (c === null) return;
+  if (c.length < {{ cfg.CLAVE_MIN }}) { document.getElementById("mensaje").textContent = "La palabra clave es demasiado corta."; return; }
+  accion("{{ url_for('admin.api_clave') }}", b.dataset.clave, null, { accion: "cambiar", clave: c });
+}));
+document.querySelectorAll("[data-quitar-clave]").forEach((b) => b.addEventListener("click", () =>
+  accion("{{ url_for('admin.api_clave') }}", b.dataset.quitarClave,
+         `¿Quitar la palabra clave de ${b.dataset.quitarClave}? Volverá a entrar solo con el rostro.`, { accion: "quitar" })));
+document.querySelectorAll("[data-desbloquear]").forEach((b) => b.addEventListener("click", () =>
+  accion("{{ url_for('admin.api_desbloquear') }}", b.dataset.desbloquear)));
+</script>
+{% endblock %}
