@@ -1,0 +1,7 @@
+inicio_s,fin_s,identidad,condicion
+2.0,32.0,V01,luz normal de frente a 50 cm
+34.0,49.0,V01,con lentes
+51.0,81.0,V02,luz normal de frente a 50 cm
+83.0,98.0,V02,a 1 m
+100.0,120.0,no registrado A,luz normal de frente
+122.0,142.0,no registrado B,luz normal de frente

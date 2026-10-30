@@ -1,0 +1,31 @@
+tipo,foto,persona_real,dice_ser,puntuacion
+externa,Kashyap_25.jpg,Kashyap,Marmik,0.62848973
+externa,Courtney Cox_58.jpg,Courtney Cox,Charlize Theron,0.59398586
+externa,Kashyap_17.jpg,Kashyap,Marmik,0.56616783
+externa,Kashyap_22.jpg,Kashyap,Marmik,0.532528
+externa,Hugh Jackman_63.jpg,Hugh Jackman,Robert Downey Jr,0.52874875
+externa,Kashyap_19.jpg,Kashyap,Marmik,0.518165
+externa,Kashyap_29.jpg,Kashyap,Marmik,0.4989795
+externa,Natalie Portman_27.jpg,Natalie Portman,Margot Robbie,0.49622944
+externa,Hugh Jackman_94.jpg,Hugh Jackman,Lisa Kudrow,0.49531263
+externa,Kashyap_18.jpg,Kashyap,Marmik,0.4927584
+interna,Vijay Deverakonda_17.jpg,Vijay Deverakonda,Hrithik Roshan,0.5961136
+interna,Hrithik Roshan_93.jpg,Hrithik Roshan,Akshay Kumar,0.56295574
+interna,Vijay Deverakonda_77.jpg,Vijay Deverakonda,Hrithik Roshan,0.56058234
+interna,Anushka Sharma_3.jpg,Anushka Sharma,Alia Bhatt,0.5505165
+interna,Vijay Deverakonda_74.jpg,Vijay Deverakonda,Hrithik Roshan,0.5483966
+interna,Hrithik Roshan_1.jpg,Hrithik Roshan,Vijay Deverakonda,0.5475131
+interna,Vijay Deverakonda_38.jpg,Vijay Deverakonda,Hrithik Roshan,0.54731226
+interna,Anushka Sharma_36.jpg,Anushka Sharma,Alia Bhatt,0.546112
+interna,Vijay Deverakonda_39.jpg,Vijay Deverakonda,Hrithik Roshan,0.5452762
+interna,Hrithik Roshan_73.jpg,Hrithik Roshan,Vijay Deverakonda,0.5449669
+genuina (más baja),Zac Efron_32.jpg,Zac Efron,Zac Efron,0.4017403
+genuina (más baja),Billie Eilish_34.jpg,Billie Eilish,Billie Eilish,0.43574882
+genuina (más baja),Billie Eilish_66.jpg,Billie Eilish,Billie Eilish,0.46656543
+genuina (más baja),Charlize Theron_37.jpg,Charlize Theron,Charlize Theron,0.58431464
+genuina (más baja),Anushka Sharma_37.jpg,Anushka Sharma,Anushka Sharma,0.59321785
+genuina (más baja),Camila Cabello_2.jpg,Camila Cabello,Camila Cabello,0.59710896
+genuina (más baja),Priyanka Chopra_2.jpg,Priyanka Chopra,Priyanka Chopra,0.61461985
+genuina (más baja),Akshay Kumar_7.jpg,Akshay Kumar,Akshay Kumar,0.6353395
+genuina (más baja),Hrithik Roshan_61.jpg,Hrithik Roshan,Hrithik Roshan,0.6426464
+genuina (más baja),Akshay Kumar_30.jpg,Akshay Kumar,Akshay Kumar,0.64720833

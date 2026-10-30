@@ -1,0 +1,25 @@
+tipo,foto,persona_real,dice_ser,puntuacion
+externa,Elizabeth Olsen_7.jpg,Elizabeth Olsen,Alexandra Daddario,0.51099455
+externa,Henry Cavill_17.jpg,Henry Cavill,Zac Efron,0.49025512
+externa,Henry Cavill_55.jpg,Henry Cavill,Zac Efron,0.45508426
+externa,Henry Cavill_7.jpg,Henry Cavill,Brad Pitt,0.44603208
+externa,Elizabeth Olsen_70.jpg,Elizabeth Olsen,Jessica Alba,0.43350852
+externa,Henry Cavill_100.jpg,Henry Cavill,Zac Efron,0.43026257
+externa,Elizabeth Olsen_26.jpg,Elizabeth Olsen,Jessica Alba,0.42208624
+externa,Elizabeth Olsen_39.jpg,Elizabeth Olsen,Claire Holt,0.42184
+interna,Hrithik Roshan_49.jpg,Hrithik Roshan,Vijay Deverakonda,0.5830424
+interna,Hrithik Roshan_68.jpg,Hrithik Roshan,Vijay Deverakonda,0.57569885
+interna,Hrithik Roshan_44.jpg,Hrithik Roshan,Vijay Deverakonda,0.5715455
+interna,Hrithik Roshan_41.jpg,Hrithik Roshan,Vijay Deverakonda,0.5678308
+interna,Hrithik Roshan_67.jpg,Hrithik Roshan,Vijay Deverakonda,0.56627
+interna,Hrithik Roshan_100.jpg,Hrithik Roshan,Vijay Deverakonda,0.55693924
+interna,Akshay Kumar_11.jpg,Akshay Kumar,Hrithik Roshan,0.5532372
+interna,Hrithik Roshan_51.jpg,Hrithik Roshan,Vijay Deverakonda,0.5499793
+genuina (más baja),Zac Efron_56.jpg,Zac Efron,Zac Efron,0.607033
+genuina (más baja),Hrithik Roshan_100.jpg,Hrithik Roshan,Hrithik Roshan,0.609775
+genuina (más baja),Jessica Alba_101.jpg,Jessica Alba,Jessica Alba,0.6295619
+genuina (más baja),Claire Holt_47.jpg,Claire Holt,Claire Holt,0.6381172
+genuina (más baja),Marmik_17.jpg,Marmik,Marmik,0.6529125
+genuina (más baja),Akshay Kumar_20.jpg,Akshay Kumar,Akshay Kumar,0.65702784
+genuina (más baja),Vijay Deverakonda_84.jpg,Vijay Deverakonda,Vijay Deverakonda,0.6665008
+genuina (más baja),Akshay Kumar_9.jpg,Akshay Kumar,Akshay Kumar,0.67353415

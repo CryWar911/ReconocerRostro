@@ -1,0 +1,9 @@
+medida,dispositivo,mediana_ms,p95_ms
+verificación 1 a 1 (leer JPG + embedding + coseno),GPU,18.1158499999583,27.452855000137788
+embeddings por lote de 64 (ms por imagen),GPU,0.5128398437506121,0.6001176562620003
+carga del paquete,GPU,989.0566000012768,
+"registro de un usuario (54 fotos, con lectura de disco)",GPU,177.80704999950103,219.8123649998706
+verificación 1 a 1 (leer JPG + embedding + coseno),CPU,88.57610000086424,246.33258000039856
+embeddings por lote de 64 (ms por imagen),CPU,34.59988437499817,44.83736921874737
+carga del paquete,CPU,1419.1219999993336,
+"registro de un usuario (54 fotos, con lectura de disco)",CPU,2222.52650000064,2899.947085000258

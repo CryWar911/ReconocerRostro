@@ -1,0 +1,57 @@
+modelo,persona,tipo,n,errores,puntuacion_min,puntuacion_max,tasa_%
+FaceNet VGGFace2 (final),Akshay Kumar,registrada (FRR),8,0,0.6353394985198975,,0.0
+FaceNet VGGFace2 (final),Alexandra Daddario,registrada (FRR),14,0,0.7281837463378906,,0.0
+FaceNet VGGFace2 (final),Alia Bhatt,registrada (FRR),12,0,0.6541482210159302,,0.0
+FaceNet VGGFace2 (final),Amitabh Bachchan,registrada (FRR),11,0,0.8027141094207764,,0.0
+FaceNet VGGFace2 (final),Anushka Sharma,registrada (FRR),10,0,0.5932178497314453,,0.0
+FaceNet VGGFace2 (final),Billie Eilish,registrada (FRR),15,2,0.435748815536499,,13.333333333333334
+FaceNet VGGFace2 (final),Brad Pitt,registrada (FRR),18,0,0.6650390625,,0.0
+FaceNet VGGFace2 (final),Camila Cabello,registrada (FRR),13,0,0.5971089601516724,,0.0
+FaceNet VGGFace2 (final),Charlize Theron,registrada (FRR),12,0,0.5843146443367004,,0.0
+FaceNet VGGFace2 (final),Claire Holt,registrada (FRR),15,0,0.6873395442962646,,0.0
+FaceNet VGGFace2 (final),Dwayne Johnson,registrada (FRR),9,0,0.6786841154098511,,0.0
+FaceNet VGGFace2 (final),Ellen Degeneres,registrada (FRR),11,0,0.6781696081161499,,0.0
+FaceNet VGGFace2 (final),Hrithik Roshan,registrada (FRR),15,0,0.6426463723182678,,0.0
+FaceNet VGGFace2 (final),Jessica Alba,registrada (FRR),16,0,0.6518959999084473,,0.0
+FaceNet VGGFace2 (final),Lisa Kudrow,registrada (FRR),11,0,0.7580989599227905,,0.0
+FaceNet VGGFace2 (final),Margot Robbie,registrada (FRR),11,0,0.8042428493499756,,0.0
+FaceNet VGGFace2 (final),Marmik,registrada (FRR),5,0,0.660431444644928,,0.0
+FaceNet VGGFace2 (final),Priyanka Chopra,registrada (FRR),16,0,0.6146198511123657,,0.0
+FaceNet VGGFace2 (final),Robert Downey Jr,registrada (FRR),17,0,0.6486144661903381,,0.0
+FaceNet VGGFace2 (final),Roger Federer,registrada (FRR),12,0,0.8241025805473328,,0.0
+FaceNet VGGFace2 (final),Tom Cruise,registrada (FRR),9,0,0.891209602355957,,0.0
+FaceNet VGGFace2 (final),Vijay Deverakonda,registrada (FRR),17,0,0.7104936838150024,,0.0
+FaceNet VGGFace2 (final),Virat Kohli,registrada (FRR),8,0,0.8293670415878296,,0.0
+FaceNet VGGFace2 (final),Zac Efron,registrada (FRR),14,1,0.40174031257629395,,7.142857142857142
+FaceNet VGGFace2 (final),Courtney Cox,impostora externa (FAR),1920,1,,0.5939858555793762,0.052083333333333336
+FaceNet VGGFace2 (final),Hugh Jackman,impostora externa (FAR),2688,0,,0.5287487506866455,0.0
+FaceNet VGGFace2 (final),Kashyap,impostora externa (FAR),720,2,,0.6284897327423096,0.2777777777777778
+FaceNet VGGFace2 (final),Natalie Portman,impostora externa (FAR),2520,0,,0.4962294399738312,0.0
+Control (a2) ResNet-18 ImageNet,Akshay Kumar,registrada (FRR),8,5,0.75101238489151,,62.5
+Control (a2) ResNet-18 ImageNet,Alexandra Daddario,registrada (FRR),14,3,0.8348262906074524,,21.428571428571427
+Control (a2) ResNet-18 ImageNet,Alia Bhatt,registrada (FRR),12,4,0.7264321446418762,,33.33333333333333
+Control (a2) ResNet-18 ImageNet,Amitabh Bachchan,registrada (FRR),11,0,0.9164278507232666,,0.0
+Control (a2) ResNet-18 ImageNet,Anushka Sharma,registrada (FRR),10,6,0.7155995965003967,,60.0
+Control (a2) ResNet-18 ImageNet,Billie Eilish,registrada (FRR),15,8,0.7701685428619385,,53.333333333333336
+Control (a2) ResNet-18 ImageNet,Brad Pitt,registrada (FRR),18,3,0.6948384642601013,,16.666666666666664
+Control (a2) ResNet-18 ImageNet,Camila Cabello,registrada (FRR),13,1,0.7469209432601929,,7.6923076923076925
+Control (a2) ResNet-18 ImageNet,Charlize Theron,registrada (FRR),12,6,0.7389099597930908,,50.0
+Control (a2) ResNet-18 ImageNet,Claire Holt,registrada (FRR),15,6,0.7516322731971741,,40.0
+Control (a2) ResNet-18 ImageNet,Dwayne Johnson,registrada (FRR),9,3,0.7852515578269958,,33.33333333333333
+Control (a2) ResNet-18 ImageNet,Ellen Degeneres,registrada (FRR),11,3,0.6555616855621338,,27.27272727272727
+Control (a2) ResNet-18 ImageNet,Hrithik Roshan,registrada (FRR),15,4,0.7935217618942261,,26.666666666666668
+Control (a2) ResNet-18 ImageNet,Jessica Alba,registrada (FRR),16,2,0.863540768623352,,12.5
+Control (a2) ResNet-18 ImageNet,Lisa Kudrow,registrada (FRR),11,3,0.7943141460418701,,27.27272727272727
+Control (a2) ResNet-18 ImageNet,Margot Robbie,registrada (FRR),11,0,0.8869394063949585,,0.0
+Control (a2) ResNet-18 ImageNet,Marmik,registrada (FRR),5,2,0.7012845277786255,,40.0
+Control (a2) ResNet-18 ImageNet,Priyanka Chopra,registrada (FRR),16,6,0.5685892105102539,,37.5
+Control (a2) ResNet-18 ImageNet,Robert Downey Jr,registrada (FRR),17,2,0.7372284531593323,,11.76470588235294
+Control (a2) ResNet-18 ImageNet,Roger Federer,registrada (FRR),12,3,0.7183431386947632,,25.0
+Control (a2) ResNet-18 ImageNet,Tom Cruise,registrada (FRR),9,1,0.871218204498291,,11.11111111111111
+Control (a2) ResNet-18 ImageNet,Vijay Deverakonda,registrada (FRR),17,3,0.7348871231079102,,17.647058823529413
+Control (a2) ResNet-18 ImageNet,Virat Kohli,registrada (FRR),8,2,0.7679658532142639,,25.0
+Control (a2) ResNet-18 ImageNet,Zac Efron,registrada (FRR),14,4,0.7561008930206299,,28.57142857142857
+Control (a2) ResNet-18 ImageNet,Courtney Cox,impostora externa (FAR),1920,6,,0.912470817565918,0.3125
+Control (a2) ResNet-18 ImageNet,Hugh Jackman,impostora externa (FAR),2688,2,,0.909125804901123,0.0744047619047619
+Control (a2) ResNet-18 ImageNet,Kashyap,impostora externa (FAR),720,0,,0.8676579594612122,0.0
+Control (a2) ResNet-18 ImageNet,Natalie Portman,impostora externa (FAR),2520,4,,0.8910678625106812,0.15873015873015872

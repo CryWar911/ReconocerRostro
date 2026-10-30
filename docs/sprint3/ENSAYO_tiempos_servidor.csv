@@ -1,0 +1,3 @@
+fuente,dispositivo,n,servidor_mediana_s,servidor_p95_s,peticion_mediana_s,peticion_p95_s,resultados,fecha
+ENSAYO: 5 fotos del dataset (val) encuadradas en 640x480; no es la cámara real,CPU,20,0.388,0.402,0.398,0.412,permitido: 20,2026-10-29
+ENSAYO: 5 fotos del dataset (val) encuadradas en 640x480; no es la cámara real,GPU,20,0.268,0.294,0.278,0.305,permitido: 20,2026-10-29
